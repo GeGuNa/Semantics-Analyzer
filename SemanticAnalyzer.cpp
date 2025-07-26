@@ -73,7 +73,6 @@ private:
     }
     
     Symbol* find_symbol(const std::string& name) {
-        // Check scopes from innermost to outermost
         for (auto it = scope_stack.rbegin(); it != scope_stack.rend(); ++it) {
             auto found = it->find(name);
             if (found != it->end()) {
@@ -146,10 +145,10 @@ private:
         sym.name = param->name;
         sym.symbol_type = SymbolType::Variable;
         sym.type_info = parse_type(param->type);
-        sym.is_initialized = true; // Parameters are always initialized
+        sym.is_initialized = true; 
         sym.declaration_line = param->line;
         
-        // Check for duplicate parameter name
+
         if (scope_stack.back().count(param->name)) {
             throw SemanticError("Duplicate parameter name '" + param->name + "'", param->line);
         }
