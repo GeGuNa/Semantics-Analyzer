@@ -50,11 +50,10 @@ class SemanticAnalyzer {
     
 public:
     SemanticAnalyzer() {
-        // Push global scope
+
         enter_scope();
         
-        // Add built-in types
-        // Could add more here as needed
+
     }
     
     void analyze(std::shared_ptr<ASTNode> root) {
@@ -104,12 +103,12 @@ private:
                 visit_const_decl(std::static_pointer_cast<ConstDeclarationNode>(node));
                 break;
             }
-            // Handle other node types...
+        
         }
     }
     
     void visit_function(std::shared_ptr<FunctionNode> func) {
-        // Check for duplicate function name
+ 
         if (find_symbol(func->name)) {
             throw SemanticError("Duplicate function name '" + func->name + "'", func->line);
         }
@@ -227,10 +226,8 @@ private:
         TypeInfo init_type = visit_expression(var_decl->initializer);
         
         if (sym.type_info.kind == TypeKind::Auto) {
-            // Type inference
             sym.type_info = init_type;
         } else {
-            // Check type compatibility
             if (!types_compatible(sym.type_info, init_type)) {
                 throw SemanticError("Type mismatch in var declaration", var_decl->line);
             }
